@@ -4,7 +4,7 @@
     -->
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
+            <a href="#" class="simple-text">
                 Academy Blue
             </a>
         </div>
@@ -16,12 +16,12 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="./user.html">
+                <a class="nav-link" href="{{ route('categories.index') }}">
                     <i class="nc-icon nc-circle-09"></i>
                     <p>Categorías</p>
                 </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="./table.html">
                     <i class="nc-icon nc-notes"></i>
                     <p>Cursos</p>

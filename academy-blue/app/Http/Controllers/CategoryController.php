@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+
 
 class CategoryController extends Controller
 {
@@ -28,13 +26,11 @@ class CategoryController extends Controller
     public function store(CategoryStoreRequest $request)
     {
         $category = Category::create($request->validated());
-
-        session()->flash('success', 'Registro creado exitosamente');
-
+        session()->flash('succes','creado exitosamente');
         return redirect()->route('categories.index');
     }
 
-    public function edit(Request $request, Category $category)
+    public function edit(Category $category)
     {
         return view('category.edit', [
             'category' => $category,
@@ -44,16 +40,14 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request, Category $category)
     {
         $category->update($request->validated());
-
-        session()->flash('success', 'Registro actuzalido exitosamente');
-
+      session()->flash('succes','actualizado exitosamente');
         return redirect()->route('categories.index');
     }
 
-    public function destroy(Request $request, Category $category)
+    public function destroy(Category $category)
     {
         $category->delete();
-        session()->flash('success', 'Registro eliminado exitosamente');
+        session()->flash('succes','Registro eliminado exitosamente');
         return redirect()->route('categories.index');
     }
 }

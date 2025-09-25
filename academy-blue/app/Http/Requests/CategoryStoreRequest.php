@@ -24,4 +24,12 @@ class CategoryStoreRequest extends FormRequest
             'description' => ['nullable', 'string'],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'description' => 'descripción',
+        ];
+    }
 }

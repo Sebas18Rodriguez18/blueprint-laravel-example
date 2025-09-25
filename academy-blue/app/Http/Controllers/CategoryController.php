@@ -6,7 +6,6 @@ use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 
-
 class CategoryController extends Controller
 {
     public function index()
@@ -26,7 +25,9 @@ class CategoryController extends Controller
     public function store(CategoryStoreRequest $request)
     {
         $category = Category::create($request->validated());
-        session()->flash('succes','creado exitosamente');
+
+        session()->flash('success', 'Registro creado exitosamente');
+
         return redirect()->route('categories.index');
     }
 
@@ -40,14 +41,18 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request, Category $category)
     {
         $category->update($request->validated());
-      session()->flash('succes','actualizado exitosamente');
+
+        session()->flash('success', 'Registro actualizado exitosamente');
+
         return redirect()->route('categories.index');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        session()->flash('succes','Registro eliminado exitosamente');
+
+        session()->flash('success', 'Registro eliminado exitosamente');
+
         return redirect()->route('categories.index');
     }
 }

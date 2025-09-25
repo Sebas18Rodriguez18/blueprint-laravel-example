@@ -5,55 +5,58 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Models\Course;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Models\User;
+use App\Models\Category;
 
 class CourseController extends Controller
 {
-    public function index(Request $request): Response
+    public function index()
     {
-        $courses = Course::all();
-
+        $courses = Course::with(['instructor', 'category'])->get();
         return view('course.index', [
             'courses' => $courses,
         ]);
     }
 
-    public function create(Request $request): Response
+    public function create()
     {
-        return view('course.create');
-    }
-
-    public function store(CourseStoreRequest $request): Response
-    {
-        $course = Course::create($request->validated());
-
-        $request->session()->flash('course.id', $course->id);
-
-        return redirect()->route('courses.index');
-    }
-
-    public function edit(Request $request, Course $course): Response
-    {
-        return view('course.edit', [
-            'course' => $course,
+        $instructors = User::pluck('name', 'id');
+        $categories = Category::pluck('name', 'id');
+        return view('course.create', [
+            'instructors' => $instructors,
+            'categories' => $categories,
         ]);
     }
 
-    public function update(CourseUpdateRequest $request, Course $course): Response
+    public function store(CourseStoreRequest $request)
     {
-        $course->update($request->validated());
-
-        $request->session()->flash('course.id', $course->id);
-
+        $course = Course::create($request->validated());
+        session()->flash('success', 'Registro creado exitosamente');
         return redirect()->route('courses.index');
     }
 
-    public function destroy(Request $request, Course $course): Response
+    public function edit(Course $course)
+    {
+        $instructors = User::pluck('name', 'id');
+        $categories = Category::pluck('name', 'id');
+        return view('course.edit', [
+            'course' => $course,
+            'instructors' => $instructors,
+            'categories' => $categories,
+        ]);
+    }
+
+    public function update(CourseUpdateRequest $request, Course $course)
+    {
+        $course->update($request->validated());
+        session()->flash('success', 'Registro actualizado exitosamente');
+        return redirect()->route('courses.index');
+    }
+
+    public function destroy(Course $course)
     {
         $course->delete();
-
+        session()->flash('success', 'Registro eliminado exitosamente');
         return redirect()->route('courses.index');
     }
 }

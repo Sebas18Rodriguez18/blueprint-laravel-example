@@ -24,4 +24,12 @@ class CategoryUpdateRequest extends FormRequest
             'description' => ['nullable', 'string'],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'description' => 'descripción',
+        ];
+    }
 }
